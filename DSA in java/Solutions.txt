@@ -1,0 +1,298 @@
+Leetcode 217-
+class Solution {
+    public boolean containsDuplicate(int[] nums) {
+        Arrays.sort(nums);
+        
+        for (int i = 1; i < nums.length; i++) {
+            if (nums[i] == nums[i - 1]) {
+                return true;
+            }
+        }
+        
+        return false;        
+    }
+}
+
+###########################################################################################
+
+
+
+Leetcode 1-
+class Solution {
+    public int[] twoSum(int[] nums, int target) {
+        int n = nums.length;
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = i + 1; j < n; j++) {
+                if (nums[i] + nums[j] == target) {
+                    return new int[]{i, j};
+                }
+            }
+        }
+        return new int[]{}; // No solution found
+    }
+}
+
+###########################################################################################
+
+
+Leetcode 206-
+class Solution {
+    public ListNode reverseList(ListNode head) {
+        ListNode node = null;
+
+        while (head != null) {
+            ListNode temp = head.next;
+            head.next = node;
+            node = head;
+            head = temp;
+        }
+
+        return node;        
+    }
+}
+
+###########################################################################################
+
+Leetcode 876-
+class Solution {
+    public ListNode middleNode(ListNode head) {
+        ListNode slow = head, fast = head;
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        return slow;
+    }
+}
+
+###########################################################################################
+
+Leetcode 141-
+public class Solution {
+    public boolean hasCycle(ListNode head) {
+        ListNode fast = head;
+        ListNode slow = head;
+
+        while (fast != null && fast.next != null) {
+            fast = fast.next.next;
+            slow = slow.next;
+
+            if (fast == slow) {
+                return true;
+            }
+        }
+
+        return false;        
+    }
+}
+
+###########################################################################################
+
+Leetcode 19-
+class Solution {
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        ListNode res = new ListNode(0, head);
+        ListNode dummy = res;
+
+        for (int i = 0; i < n; i++) {
+            head = head.next;
+        }
+
+        while (head != null) {
+            head = head.next;
+            dummy = dummy.next;
+        }
+
+        dummy.next = dummy.next.next;
+
+        return res.next;        
+    }
+}
+
+###########################################################################################
+
+
+Leetcode 344-
+class Solution {
+    public void reverseString(char[] s) {
+        // Iterate from the beginning (i) and end (j) of the array towards the middle.
+        for (int i = 0, j = s.length - 1; i < s.length / 2; i++, j--) {
+            // Use a temporary variable (temp) to store the character at index i.
+            char temp = s[i];
+
+            // Replace the character at index i with the character at index j.
+            s[i] = s[j];
+
+            // Replace the character at index j with the character in the temporary variable (temp).
+            s[j] = temp;
+        } 
+        // At this point, the character array 's' contains the reversed string.
+    }
+}
+
+###########################################################################################
+
+Leetcode 125-
+class Solution {
+    public boolean isPalindrome(String s) {
+        s = s.toLowerCase().replaceAll("[^a-z0-9]", "");
+        int left = 0;
+        int right = s.length() - 1;
+
+        while (left < right) {
+            if (s.charAt(left) != s.charAt(right)) {
+                return false;
+            }
+            left++;
+            right--;
+        }
+        return true;        
+    }
+}
+
+###########################################################################################
+
+
+class Solution {
+    public boolean isValid(String s) {
+        Stack<Character> stack = new Stack<Character>();
+        for( char ch : s.toCharArray()){
+            if(ch == '(' || ch== '[' || ch=='{'){
+                stack.push(ch);
+            }else{
+                if(ch==')'){
+                    if(stack.isEmpty() || stack.pop() !='('){
+                        return false;
+                    }
+                }
+                else if(ch==']'){
+                    if(stack.isEmpty() || stack.pop() !='['){
+                        return false;
+                        
+                    }
+                }
+                if(ch=='}'){
+                    if(stack.isEmpty() || stack.pop() !='{'){
+                        return false;
+                    }
+                }
+            }
+        }
+        return stack.isEmpty();
+    }
+}
+
+
+###########################################################################################
+
+
+class MyQueue {
+    private Stack<Integer> first;
+    private Stack<Integer> second;
+    public MyQueue() {
+        first = new Stack<>();
+        second = new Stack<>();
+    }
+    
+    public void push(int x) {
+        first.push(x);
+    }
+    
+    public int pop() {
+        while(!first.isEmpty()){
+        second.push(first.pop());
+        }
+        int removed = second.pop();
+        while(!second.isEmpty()){
+            first.push(second.pop());
+        }
+        return removed;
+    }
+    
+    public int peek() {
+        while(!first.isEmpty()){
+        second.push(first.pop());
+        }
+        int peek = second.peek();
+        while(!second.isEmpty()){
+            first.push(second.pop());
+        }
+        return peek;
+    }
+    
+    public boolean empty() {
+        return first.isEmpty();
+    }
+}
+
+###########################################################################################
+
+class MyCircularQueue {
+    int maxSize, head = 0, tail = -1;
+    int[] data;
+    public MyCircularQueue(int k) {
+        data = new int[k];
+        maxSize = k;
+    }
+    public boolean enQueue(int val) {
+        if (isFull()) return false;
+        tail = (tail + 1) % maxSize;
+        data[tail] = val;
+        return true;
+    }
+    public boolean deQueue() {
+        if (isEmpty()) return false;
+        if (head == tail) {
+            head = 0;
+            tail = -1;
+        } else head = (head + 1) % maxSize;
+        return true;
+    }
+    public int Front() {
+        return isEmpty() ? -1 : data[head];
+    }
+    public int Rear() {
+        return isEmpty() ? -1 : data[tail];
+    }
+    public boolean isEmpty() {
+        return tail == -1;
+    }
+    public boolean isFull() {
+        return !isEmpty() && (tail + 1) % maxSize == head;
+    }
+
+    }
+}
+
+###########################################################################################
+
+import java.util.PriorityQueue;
+
+class KthLargest {
+    private int k;
+    private PriorityQueue<Integer> minHeap;
+
+    public KthLargest(int k, int[] nums) {
+        this.k = k;
+        this.minHeap = new PriorityQueue<>(k);
+        for (int num : nums) {
+            add(num);
+        }
+    }
+
+    public int add(int val) {
+        if (minHeap.size() < k) {
+            minHeap.offer(val);
+        } else if (val > minHeap.peek()) {
+            minHeap.poll();
+            minHeap.offer(val);
+        }
+        return minHeap.peek();
+    }
+}
+
+###########################################################################################
+
+
+
+
